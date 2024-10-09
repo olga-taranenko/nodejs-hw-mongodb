@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-
 import 'dotenv/config';
+
+import mongoose from 'mongoose';
 
 const user = process.env.MONGODB_USER;
 const password = process.env.MONGODB_PASSWORD;

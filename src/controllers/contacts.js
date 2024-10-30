@@ -34,14 +34,12 @@ export const getAllContactsController = async (req, res) => {
 
 export const getContactByIdController = async (req, res) => {
   const { contactId } = req.params;
-  const contact = await getContactById(contactId);
+  const userId = req.user._id.toString();
+  const contact = await getContactById(userId, contactId);
   if (!contact) {
     throw createHttpError(404, 'Contact not found');
   }
 
-  if (contact.userId.toString() !== req.user._id.toString()) {
-    throw createHttpError.NotFound('Contact not found');
-  }
   res.status(200).json({
     status: 200,
     message: `Successfully found contact with id ${contactId}!`,
@@ -62,14 +60,11 @@ export const createContactController = async (req, res) => {
 
 export const updateContactController = async (req, res) => {
   const { contactId } = req.params;
-  const contact = await updateContact(contactId, req.body);
+  const userId = req.user._id.toString();
+  const contact = await updateContact(userId, contactId, req.body);
 
   if (!contact) {
     throw createHttpError(404, 'Contact not found');
-  }
-
-  if (contact.userId.toString() !== req.user._id.toString()) {
-    throw createHttpError.NotFound('Contact not found');
   }
 
   res.status(200).json({
@@ -81,14 +76,11 @@ export const updateContactController = async (req, res) => {
 
 export const deleteContactController = async (req, res) => {
   const { contactId } = req.params;
-  const contact = await deleteContact(contactId);
+  const userId = req.user._id.toString();
+  const contact = await deleteContact(userId, contactId);
 
   if (!contact) {
     throw createHttpError(404, 'Contact not found');
-  }
-
-  if (contact.userId.toString() !== req.user._id.toString()) {
-    throw createHttpError.NotFound('Contact not found');
   }
 
   res.sendStatus(204);

@@ -6,6 +6,7 @@ export const getAllContacts = async ({
   sortBy,
   sortOrder,
   filter,
+  userId,
 }) => {
   const skip = page > 0 ? (page - 1) * perPage : 0;
 
@@ -18,6 +19,8 @@ export const getAllContacts = async ({
   if (typeof filter.isFavourite !== 'undefined') {
     contactsQuery.where('isFavourite').equals(filter.isFavourite);
   }
+
+  contactsQuery.where('userId').equals(userId);
 
   const [total, contacts] = await Promise.all([
     ContactCollection.countDocuments(contactsQuery),

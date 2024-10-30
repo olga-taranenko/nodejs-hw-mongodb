@@ -22,6 +22,7 @@ export const getAllContactsController = async (req, res) => {
     sortBy,
     sortOrder,
     filter,
+    userId: req.user._id,
   });
 
   res.status(200).json({
@@ -38,6 +39,9 @@ export const getContactByIdController = async (req, res) => {
     throw createHttpError(404, 'Contact not found');
   }
 
+  if (contact.userId.toString() !== req.user._id.toString()) {
+    throw createHttpError.NotFound('Contact not found');
+  }
   res.status(200).json({
     status: 200,
     message: `Successfully found contact with id ${contactId}!`,
@@ -46,7 +50,9 @@ export const getContactByIdController = async (req, res) => {
 };
 
 export const createContactController = async (req, res) => {
-  const contact = await createContact(req.body);
+  const userId = req.user._id;
+
+  const contact = await createContact({ ...req.body, userId });
   res.status(201).json({
     status: 201,
     message: 'Successfully created a contact!',
@@ -62,6 +68,10 @@ export const updateContactController = async (req, res) => {
     throw createHttpError(404, 'Contact not found');
   }
 
+  if (contact.userId.toString() !== req.user._id.toString()) {
+    throw createHttpError.NotFound('Contact not found');
+  }
+
   res.status(200).json({
     status: 200,
     message: 'Successfully patched a contact!',
@@ -75,6 +85,10 @@ export const deleteContactController = async (req, res) => {
 
   if (!contact) {
     throw createHttpError(404, 'Contact not found');
+  }
+
+  if (contact.userId.toString() !== req.user._id.toString()) {
+    throw createHttpError.NotFound('Contact not found');
   }
 
   res.sendStatus(204);

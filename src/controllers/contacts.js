@@ -10,6 +10,7 @@ import createHttpError from 'http-errors';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
+// import {saveFileToUploadDir} from '../utils/saveFileToUploadDir.js';
 
 export const getAllContactsController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
@@ -49,6 +50,12 @@ export const getContactByIdController = async (req, res) => {
 
 export const createContactController = async (req, res) => {
   const userId = req.user._id;
+  // const photo = req.file;
+
+  // let photoUrl = null;
+  // if (photo) {
+  //   photoUrl = await saveFileToUploadDir(photo);
+  // }
 
   const contact = await createContact({ ...req.body, userId });
   res.status(201).json({

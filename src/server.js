@@ -27,9 +27,10 @@ export const setupServer = () => {
   app.use(cors());
   app.use(cookieParser());
 
-  app.use('/uploads', express.static(UPLOAD_DIR));
   app.use('/auth', authRouter);
   app.use('/contacts', contactsRouter);
+
+  app.use('/uploads', express.static(UPLOAD_DIR));
 
   app.use('*', notFoundHandler);
 

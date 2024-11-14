@@ -4,7 +4,6 @@ required:
   - name
   - phoneNumber
   - contactType
-  - userId
 properties:
   _id:
     description: "Contact's id"
@@ -31,10 +30,6 @@ properties:
     description: 'Whether is contact favourite'
     type: boolean
     example: false
-  userId:
-    description: "Contact's user id"
-    type: string
-    example: 65e4decdd286b30065d54af9
   photo:
     description: "Link to contact's photo"
     type: string

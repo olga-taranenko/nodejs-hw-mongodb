@@ -12,8 +12,8 @@ tags:
   - name: Auth
     description: Auth operations.
 servers:
-  - url: http://127.0.0.1:8080
-  # - url: #посилання на задеплоєний сайт
+  # - url: http://127.0.0.1:8080
+  - url: https://nodejs-hw-mongodb-2-aa4t.onrender.com
 paths:
   /contacts:
     get:
